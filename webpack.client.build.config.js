@@ -2,6 +2,8 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
+
 const buildDirectory = "dist";
 const outputDirectory = buildDirectory + "/client";
 module.exports = {
@@ -36,6 +38,7 @@ module.exports = {
 	},
 
 	plugins: [
+		new NodePolyfillPlugin(),
 		new CleanWebpackPlugin({
 			cleanOnceBeforeBuildPatterns: [
 				path.join(__dirname, buildDirectory),
