@@ -9,7 +9,6 @@ import { onError } from "@apollo/client/link/error";
 const cache = new InMemoryCache();
 const httpLink = new HttpLink({ uri: "http://localhost:8000/graphql" });
 
-
 const apolloLink = ApolloLink.from([
 	onError(({ graphQLErrors, networkError }) => {
 		if (graphQLErrors) {
@@ -22,11 +21,10 @@ const apolloLink = ApolloLink.from([
 			}
 		}
 	}),
-    new HttpLink({ uri: "http://localhost:8000/graphql" })
+	new HttpLink({ uri: "http://localhost:8000/graphql" }),
 ]);
 
 export const client = new ApolloClient({
 	cache,
 	link: apolloLink,
-    
 });

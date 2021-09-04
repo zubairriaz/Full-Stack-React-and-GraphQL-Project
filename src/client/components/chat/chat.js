@@ -1,5 +1,5 @@
 import { Query } from "@apollo/client/react/components";
-import { CHAT_QUERY, GET_CHAT } from "../queries/query";
+import { CHAT_QUERY, GET_CHAT } from "../../queries/query";
 import React, { useState } from "react";
 import { ChatBox } from "./chatBox";
 

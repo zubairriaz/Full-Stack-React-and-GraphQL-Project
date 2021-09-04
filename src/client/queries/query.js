@@ -46,3 +46,18 @@ export const GET_CHAT = gql`
 		}
 	}
 `;
+
+export const GET_POSTS = gql`
+	query ex($postsFeedPage: Int, $postsFeedLimit: Int) {
+		postsFeed(page: $postsFeedPage, limit: $postsFeedLimit) {
+			posts {
+				id
+				text
+				user {
+					avatar
+					username
+				}
+			}
+		}
+	}
+`;

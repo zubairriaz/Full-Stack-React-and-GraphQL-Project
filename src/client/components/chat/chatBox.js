@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Query, Mutation,  } from "@apollo/client/react/components";
-import { GET_CHAT } from "../queries/query";
-import { ADD_MESSAGE } from "../mutation/mutation";
+import { GET_CHAT } from "../../queries/query";
+import { ADD_MESSAGE } from "../../mutation/mutation";
+import Loader from "../loader";
 
 
 export function ChatBox({ chatId, closeChat }) {
@@ -17,7 +18,7 @@ export function ChatBox({ chatId, closeChat }) {
 			variables={{ chatId }}
 		>
 			{({ loading, error, data }) => {
-				if (loading) return <p>Loading...</p>;
+				if (loading) return <Loader></Loader>
 				if (error) return error.message;
 
 				const { chat } = data;

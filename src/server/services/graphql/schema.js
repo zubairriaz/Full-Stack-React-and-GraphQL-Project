@@ -17,10 +17,13 @@ input MessageInput {
     chatId: Int!
   }
 
+
 type RootMutation{
     addPost(post:PostInput!):Post
     addChat(chat:ChatInput!):Chat
     addMessage (message: MessageInput!): Message
+    updatePost(post:PostInput, postId : Int):Post
+
 }
 
 `;
@@ -50,10 +53,16 @@ type Message {
 
   }
 
+  type PostFeed{
+      posts:[Post]
+  }
+
 type RootQuery {
     posts:[Post]
     chats:[Chat]
     chat(chatId:Int):Chat
+    postsFeed(page: Int, limit: Int): PostFeed
+
 }
 ${mutationDefination}
 schema{

@@ -2,9 +2,13 @@ import React, { useState } from "react";
 import { Helmet } from "react-helmet";
 import "./assets/styles.css";
 
-import Feed from "./components/feed";
-import FeedForm from "./components/new-feed-form";
-import Chat from "./components/chat";
+import Feed from "./components/feed/feed";
+import FeedForm from "./components/feed/new-feed-form";
+import Chat from "./components/chat/chat";
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
+
+library.add(faAngleDown);
 
 function App() {
 	return (

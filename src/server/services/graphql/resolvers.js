@@ -33,6 +33,26 @@ function resolvers() {
 				logger.log("info", "Post are returned");
 				return Post.findAll({ order: [["createdAt", "Desc"]] });
 			},
+			postsFeed(root, { page, limit }, context) {
+				var skip = 0;
+
+				if (page && limit) {
+					skip = page * limit;
+				}
+
+				var query = {
+					order: [["createdAt", "DESC"]],
+					offset: skip,
+				};
+
+				if (limit) {
+					query.limit = limit;
+				}
+
+				return {
+					posts: Post.findAll(query),
+				};
+			},
 			chat(root, { chatId }, context) {
 				return Chat.findByPk(chatId, {
 					include: [
@@ -84,13 +104,36 @@ function resolvers() {
 			users(chat, args, context) {
 				return chat.getUsers();
 			},
-			lastMessage(chat,args,context){
-				return chat.getMessages({limit: 1, order: [['id', 'DESC']]}).then((message) => {
-				 return message[0];
-			   });
-			 },
+			lastMessage(chat, args, context) {
+				return chat
+					.getMessages({ limit: 1, order: [["id", "DESC"]] })
+					.then((message) => {
+						return message[0];
+					});
+			},
 		},
 		RootMutation: {
+			updatePost(root, { post, postId }, context) {
+				Post.update(
+					{
+						...post,
+					},
+					{
+						where: {
+							id: postId,
+						},
+					},
+				).then((rows) => {
+					if (rows[0] === 1) {
+						logger.log({
+							level: "info",
+							message: "Post " + postId + " was updated",
+						});
+
+						return Post.findById(postId);
+					}
+				});
+			},
 			addPost(root, { post }, context) {
 				return User.findAll().then((users) => {
 					const userRow = users[0];
@@ -100,7 +143,7 @@ function resolvers() {
 					});
 				});
 			},
-		
+
 			addChat(root, { chat }, context) {
 				logger.log({
 					level: "info",
